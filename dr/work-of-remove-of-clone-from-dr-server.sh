@@ -1,5 +1,7 @@
 #!/bin/sh
-cd /usr/local/src/ceph-dr-sync-tool-for-proxmox
+
+BASEDIR=$(dirname $0)
+cd $BASEDIR
 
 ## to clean the Clone images used for testing data is ok
 

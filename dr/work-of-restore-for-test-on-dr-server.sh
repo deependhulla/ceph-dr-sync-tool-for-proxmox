@@ -1,5 +1,8 @@
 #!/bin/sh
-cd /usr/local/src/ceph-dr-sync-tool-for-proxmox
+
+BASEDIR=$(dirname $0)
+cd $BASEDIR
+
 
 # copy the cofig once from primary
 ##/etc/pve/nodes/pve01/qemu-server/100.conf 
