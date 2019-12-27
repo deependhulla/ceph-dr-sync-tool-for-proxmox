@@ -8,5 +8,6 @@ cd $BASEDIR
 php remove-clone-from-dr-testing.php vm-100-disk-0
 php remove-clone-from-dr-testing.php vm-100-disk-1
 
+php remove-clone-from-dr-testing.php vm-101-disk-0
 
 

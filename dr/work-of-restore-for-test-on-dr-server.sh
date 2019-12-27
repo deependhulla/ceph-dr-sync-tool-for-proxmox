@@ -12,4 +12,5 @@ php make-clone-for-dr-testing.php vm-100-disk-0
 php make-clone-for-dr-testing.php vm-100-disk-1
 
 
+php make-clone-for-dr-testing.php vm-101-disk-0
 
