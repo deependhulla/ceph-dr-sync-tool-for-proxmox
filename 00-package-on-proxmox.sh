@@ -1,1 +1,1 @@
-apt-get install vim php-cli mc screen iptraf 
+apt-get install vim php-cli mc screen iptraf git 
