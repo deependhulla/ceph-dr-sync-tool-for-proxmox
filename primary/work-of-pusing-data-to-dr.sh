@@ -7,5 +7,6 @@ cd /usr/local/src/ceph-dr-sync-tool-for-proxmox
 php sync-primary-to-dr-site.php vm-100-disk-0
 php sync-primary-to-dr-site.php vm-100-disk-1
 
+php sync-primary-to-dr-site.php vm-101-disk-0
 
 
