@@ -1,9 +1,11 @@
 <?php
 error_reporting(E_ERROR);
 
-$cephpool="cephstorage";
+$cephpoolec=1;
+$cephpoolname="cephstorage";
 $drserversship="172.16.201.74";
 $drserversshport="22";
+
 
 $keeplastsnapshot=3;
 $debugnow=1;
@@ -21,9 +23,17 @@ print "Please Provide the image name example : vm-100-disk-0 ";
 }
 if($keyimg!="")
 {
+$cephpool=$cephpoolname;
+$cephdata='';
+if($cephpoolec==1)
+{
 
+$cephdata=$cephpoolname.'-data';
+$cephpool=$cephpoolname.'-metadata';
+}
 ###################################
-$drimg="livedr-".$keyimg;
+#$drimg="livedr-".$keyimg;
+$drimg=$keyimg;
 $cmdx="ssh -p ".$drserversshport." ".$drserversship." rbd ls ".$cephpool." | grep ".$drimg."";
 if($debugnow==1){print "\n#CHECK IF IMG THERE ON REMOTE DR SERVER \n".$cmdx."\n";}
 $cmdxout=`$cmdx`;$cmdxout=str_replace("\n","",$cmdxout);$cmdxout=str_replace("\r","",$cmdxout);
@@ -31,6 +41,11 @@ $cmdxout=`$cmdx`;$cmdxout=str_replace("\n","",$cmdxout);$cmdxout=str_replace("\r
 if($cmdxout=="")
 {
 $cmdx="ssh -p ".$drserversshport." ".$drserversship." rbd create ".$cephpool."/".$drimg." -s 1";
+if($cephpoolec==1)
+{
+##rbd create livedr-vm-102-disk-0 -s 1 --data-pool ec21-data --pool ec21-metadata
+$cmdx="ssh -p ".$drserversshport." ".$drserversship." rbd create ".$drimg." -s 1 --data-pool ".$cephdata." --pool ".$cephpool."";
+}
 if($debugnow==1){print "\n#CREATING FIRST TIME IMG ON REMOTE DR SERVER \n".$cmdx."\n";}
 
 $cmdxout=`$cmdx`;$cmdxout=str_replace("\n","",$cmdxout);$cmdxout=str_replace("\r","",$cmdxout);
