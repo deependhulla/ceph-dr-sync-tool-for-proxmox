@@ -1,14 +1,15 @@
 <?php
 error_reporting(E_ERROR);
+$debugnow=1;
 
 $cephpoolec=1;
-$cephpoolname="cephstorage";
-$drserversship="172.16.201.74";
+$cephpoolname="ec21";
+$drserversship="192.168.30.251";
 $drserversshport="22";
 
 
 $keeplastsnapshot=3;
-$debugnow=1;
+#$debugnow=1;
 
 #######
 $keyimg=$argv[1];
@@ -51,7 +52,7 @@ if($debugnow==1){print "\n#CREATING FIRST TIME IMG ON REMOTE DR SERVER \n".$cmdx
 $cmdxout=`$cmdx`;$cmdxout=str_replace("\n","",$cmdxout);$cmdxout=str_replace("\r","",$cmdxout);
 }
 
-$curtime=microtime(true);
+$curtime=date('Y-m-d_h-i-s')."__".microtime(true);
 #create CURRENT's snapshot on SOURCEPOOL
 
 $cmdx="rbd snap ls ".$cephpool."/".$keyimg." | grep ".$curtime."";
@@ -138,7 +139,16 @@ system($cmdx);
 }
 }
 
+$cmdx="rbd du '".$cephpool."/".$keyimg."' ";
+if($debugnow==1){print "\n#RDB DU INFO LOCAL \n".$cmdx." \n";}
+$cmdxout=`$cmdx`;
+print $cmdxout;
 
+
+$cmdx="ssh -p ".$drserversshport." ".$drserversship."  rbd du '".$cephpool."/".$keyimg."' ";
+if($debugnow==1){print "\n#RDB DU INFO REMOTE \n".$cmdx." \n";}
+$cmdxout=`$cmdx`;
+print $cmdxout;
 //// if key there
 }
 
